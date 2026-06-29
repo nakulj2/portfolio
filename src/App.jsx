@@ -10,6 +10,58 @@ const LINKS = [
   { label: "LinkedIn", href: "https://linkedin.com/in/nakul-jain-uiuc", value: "linkedin.com/in/nakul-jain-uiuc" },
 ];
 
+const EXPERIENCE = [
+  {
+    role: "AI Software Engineer",
+    org: "PeoplePlus Software",
+    loc: "Ann Arbor, MI",
+    period: "Aug 2025 — Present",
+    current: true,
+    desc: "Leading AI systems for the iM3 SCM platform — MCP-based recommendation engines that drive real-time technician decisions across 7 enterprise clients.",
+    tags: ["LangChain", "MCP", "Azure Foundry"],
+  },
+  {
+    role: "AI Software Engineer",
+    org: "Quilt AI LLC",
+    loc: "Boston, MA",
+    period: "Jul 2024 — Jul 2025",
+    desc: "Built LLM-powered automation — document parsers, OCR pipelines, and batch-inference services with Python, FastAPI, and Docker on cloud-native infra.",
+    tags: ["LLMs", "FastAPI", "OCR", "Docker"],
+  },
+  {
+    role: "Software Engineering Intern",
+    org: "Ensuredit",
+    loc: "New Delhi, India",
+    period: "Jun 2023 — Aug 2023",
+    desc: "Shipped a Rasa + OpenAI customer chatbot that cut query-resolution time by 32%, plus React/TypeScript real-time messaging UIs.",
+    tags: ["Rasa", "React", "WebSocket", "AWS"],
+  },
+  {
+    role: "Software Intern · Data Engineering",
+    org: "Brudata Technologies",
+    loc: "Gainesville, VA",
+    period: "Jun 2023 — Jul 2023",
+    desc: "Built synthetic-data pipelines with Docker, Airflow, and Kafka streaming to cut ingestion latency across ETL workflows.",
+    tags: ["Airflow", "Kafka", "SQL"],
+  },
+  {
+    role: "ML Research Assistant",
+    org: "University of Illinois — Mathematics",
+    loc: "Champaign, IL",
+    period: "Aug 2021 — Jan 2022",
+    desc: "Built ETL and forecasting tools for sports analytics under Prof. A.J. Hildebrand using Python and statistical models.",
+    tags: ["Python", "Forecasting", "ETL"],
+  },
+];
+
+const SKILLS = [
+  { group: "Languages", items: ["Python", "C++", "Java", "JavaScript", "TypeScript", "SQL"] },
+  { group: "AI & ML", items: ["LLMs", "Prompt Engineering", "Agentic AI", "PyTorch", "TensorFlow", "scikit-learn"] },
+  { group: "Systems", items: ["API Infrastructure", "Distributed Systems", "Data Pipelines", "Databases"] },
+  { group: "Cloud & DevOps", items: ["AWS", "GCP", "Docker", "Kubernetes", "CI/CD"] },
+  { group: "Frameworks", items: ["Flask", "FastAPI", "React", "LangChain", "Airflow", "Pinecone"] },
+];
+
 const PROJECTS = [
   {
     title: "File Classifier",
@@ -137,6 +189,26 @@ const ICONS = {
       <path d="M12 3c2.8 2.6 2.8 15.4 0 18M12 3c-2.8 2.6-2.8 15.4 0 18" />
     </>
   ),
+  pin: (
+    <>
+      <path d="M12 21s7-5.6 7-11a7 7 0 0 0-14 0c0 5.4 7 11 7 11Z" />
+      <circle cx="12" cy="10" r="2.5" />
+    </>
+  ),
+  briefcase: (
+    <>
+      <rect x="3" y="7" width="18" height="13" rx="2" />
+      <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+      <path d="M3 12h18" />
+    </>
+  ),
+  cap: (
+    <>
+      <path d="M2 9l10-4 10 4-10 4L2 9Z" />
+      <path d="M6 11v5c0 1.1 2.7 2.5 6 2.5s6-1.4 6-2.5v-5" />
+      <path d="M22 9v5" />
+    </>
+  ),
 };
 
 function Icon({ name }) {
@@ -210,23 +282,87 @@ function useInView(threshold = 0.15) {
   return [ref, inView];
 }
 
-function Projects() {
-  const [ref, inView] = useInView();
+// Renders the photo at public/avatar.jpg if present, else a monogram.
+function Avatar() {
+  const [broken, setBroken] = useState(false);
+  const src = `${import.meta.env.BASE_URL}avatar.jpg`;
+  return (
+    <div className="avatar" aria-hidden="true">
+      {broken ? (
+        <span className="avatar-mono">NJ</span>
+      ) : (
+        <img src={src} alt="" onError={() => setBroken(true)} />
+      )}
+      <span className="avatar-ring" />
+    </div>
+  );
+}
 
+function Section({ label, count, className = "", children }) {
+  const [ref, inView] = useInView();
   return (
     <section
       ref={ref}
-      className={`projects ${inView ? "projects--in" : ""}`}
-      aria-label="Projects"
+      className={`section ${className} ${inView ? "is-in" : ""}`}
+      aria-label={label}
     >
       <p className="eyebrow">
         <span className="dot" aria-hidden="true" />
-        projects
-        <span className="eyebrow-count">
-          {String(PROJECTS.length).padStart(2, "0")}
-        </span>
+        {label}
+        {count != null && (
+          <span className="eyebrow-count">{String(count).padStart(2, "0")}</span>
+        )}
       </p>
+      {children}
+    </section>
+  );
+}
 
+function Experience() {
+  return (
+    <Section label="experience" count={EXPERIENCE.length} className="experience">
+      <ol className="timeline">
+        {EXPERIENCE.map((e, i) => (
+          <li key={e.org} className="exp reveal-item" style={{ "--i": i }}>
+            <span className="exp-node" aria-hidden="true" />
+            <div className="exp-head">
+              <span className="exp-period">{e.period}</span>
+              {e.current && <span className="exp-now">now</span>}
+            </div>
+            <h3 className="exp-role">{e.role}</h3>
+            <p className="exp-org">
+              {e.org} <span className="exp-loc">· {e.loc}</span>
+            </p>
+            <p className="exp-desc">{e.desc}</p>
+            <div className="card-tags">
+              {e.tags.map((t) => (
+                <span key={t} className="tag">
+                  {t}
+                </span>
+              ))}
+            </div>
+          </li>
+        ))}
+      </ol>
+
+      <div className="edu reveal-item" style={{ "--i": EXPERIENCE.length }}>
+        <span className="edu-icon">
+          <Icon name="cap" />
+        </span>
+        <div>
+          <p className="edu-school">University of Illinois Urbana-Champaign</p>
+          <p className="edu-detail">
+            B.S. Mathematics &amp; Computer Science · 2020 — 2024
+          </p>
+        </div>
+      </div>
+    </Section>
+  );
+}
+
+function Projects() {
+  return (
+    <Section label="projects" count={PROJECTS.length} className="projects">
       <div className="project-grid">
         {PROJECTS.map((p, i) => (
           <a
@@ -254,10 +390,8 @@ function Projects() {
                 <path d="M7 17 17 7M9 7h8v8" />
               </svg>
             </div>
-
             <h3 className="card-title">{p.title}</h3>
             <p className="card-desc">{p.desc}</p>
-
             <div className="card-tags">
               {p.tags.map((t) => (
                 <span key={t} className="tag">
@@ -268,7 +402,28 @@ function Projects() {
           </a>
         ))}
       </div>
-    </section>
+    </Section>
+  );
+}
+
+function Skills() {
+  return (
+    <Section label="skills" className="skills">
+      <div className="skill-groups">
+        {SKILLS.map((s, i) => (
+          <div key={s.group} className="skill-group reveal-item" style={{ "--i": i }}>
+            <p className="skill-label">{s.group}</p>
+            <div className="card-tags">
+              {s.items.map((t) => (
+                <span key={t} className="tag">
+                  {t}
+                </span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </Section>
   );
 }
 
@@ -286,6 +441,8 @@ function App() {
   return (
     <main className="page">
       <div className="frame">
+        <Avatar />
+
         <p className="eyebrow">
           <span className="dot" aria-hidden="true" />
           whoami
@@ -303,9 +460,20 @@ function App() {
           </p>
 
           <p className="bio">
-            Building AI platforms and orchestration systems. Based in Ann
-            Arbor, Michigan.
+            Building AI platforms and orchestration systems — from MCP
+            recommendation engines to LLM document pipelines.
           </p>
+
+          <div className="hero-meta">
+            <span className="meta-item">
+              <Icon name="pin" />
+              Ann Arbor, MI
+            </span>
+            <span className="meta-item">
+              <Icon name="briefcase" />
+              PeoplePlus Software
+            </span>
+          </div>
 
           <nav className="links" aria-label="Contact and profile links">
             {LINKS.map((link, i) => (
@@ -325,15 +493,18 @@ function App() {
           </nav>
 
           <p className="scroll-hint" aria-hidden="true">
-            selected work below ↓
+            scroll for more ↓
           </p>
         </div>
       </div>
 
+      <Experience />
       <Projects />
+      <Skills />
 
       <footer className="footer">
-        <span>&copy; {new Date().getFullYear()}</span>
+        <span>&copy; {new Date().getFullYear()} Nakul Jain</span>
+        <span className="footer-built">built with React + Vite</span>
       </footer>
     </main>
   );

@@ -16,12 +16,18 @@ npm run dev
 3. Push to `main` — the workflow in `.github/workflows/deploy.yml` will build and deploy automatically.
 4. Your site will be live at `https://nakulj2.github.io/portfolio/`.
 
-## Before you deploy
+## Add your photo (optional)
 
-Update the placeholder links in `src/App.jsx` (the `LINKS` array):
-- Email
-- GitHub
-- LinkedIn
+The hero shows an `NJ` monogram by default. To use a real photo instead, drop a
+square image at `public/avatar.jpg` — it's picked up automatically, no code
+changes needed. (LinkedIn blocks automated downloads, so save your profile photo
+manually: open it, right-click → Save Image, rename to `avatar.jpg`.)
+
+## Content
+
+Experience, education, projects, and skills live in plain data arrays at the top
+of `src/App.jsx` (`EXPERIENCE`, `SKILLS`, `PROJECTS`, `LINKS`). Edit those to
+update the site — no other changes required.
 
 ## Custom domain (optional)
 
