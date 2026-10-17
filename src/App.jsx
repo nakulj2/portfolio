@@ -24,7 +24,7 @@ const EXPERIENCE = [
     role: "AI Product Engineer",
     org: "PeoplePlus Software",
     loc: "Ann Arbor, MI",
-    period: "Aug 2025 — Present",
+    period: "Aug 2025 — Sep 2026",
     desc: "Leading AI systems for the iM3 SCM platform — MCP-based recommendation engines that drive real-time technician decisions across 7 enterprise clients.",
     tags: ["LangChain", "MCP", "Azure Foundry"],
   },
