@@ -12,11 +12,19 @@ const LINKS = [
 
 const EXPERIENCE = [
   {
-    role: "AI Software Engineer",
+    role: "Strategic Project Lead",
+    org: "Mercor",
+    loc: "San Francisco, CA",
+    period: "Sep 2026 — Present",
+    current: true,
+    desc: "Run large-scale human-data programs for frontier AI labs — turning evolving research requirements into expert sourcing, task design, QA, and delivery workflows across hundreds of contributors on multimillion-dollar engagements.",
+    tags: ["Human Data", "RLHF", "Expert Ops", "QA"],
+  },
+  {
+    role: "AI Product Engineer",
     org: "PeoplePlus Software",
     loc: "Ann Arbor, MI",
     period: "Aug 2025 — Present",
-    current: true,
     desc: "Leading AI systems for the iM3 SCM platform — MCP-based recommendation engines that drive real-time technician decisions across 7 enterprise clients.",
     tags: ["LangChain", "MCP", "Azure Foundry"],
   },
@@ -467,11 +475,11 @@ function App() {
           <div className="hero-meta">
             <span className="meta-item">
               <Icon name="pin" />
-              Ann Arbor, MI
+              San Francisco, CA
             </span>
             <span className="meta-item">
               <Icon name="briefcase" />
-              PeoplePlus Software
+              Mercor
             </span>
           </div>
 
